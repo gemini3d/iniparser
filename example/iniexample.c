@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 
 #include "iniparser.h"
 
@@ -100,5 +99,3 @@ int parse_ini_file(char * ini_name)
     iniparser_freedict(ini);
     return 0 ;
 }
-
-

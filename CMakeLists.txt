@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15...3.23)
 project(iniparser
 LANGUAGES C
 HOMEPAGE_URL https://github.com/ndevilla/iniparser
-VERSION 4.1.0.0
+VERSION 4.1.0.1
 )
 
 include(CTest)
@@ -14,6 +14,9 @@ add_library(iniparser src/iniparser.c src/dictionary.c)
 target_include_directories(iniparser PUBLIC
 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 $<INSTALL_INTERFACE:include>
+)
+target_compile_definitions(iniparser PRIVATE
+$<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>
 )
 
 # for FetchContent use of this library
@@ -26,6 +29,9 @@ install(FILES src/iniparser.h src/dictionary.h TYPE INCLUDE)
 if(BUILD_TESTING)
   add_executable(test_iniparser example/iniexample.c)
   target_link_libraries(test_iniparser PRIVATE iniparser)
+  target_compile_definitions(test_iniparser PRIVATE
+  $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>
+  )
   add_test(NAME IniParser COMMAND test_iniparser)
 
   add_executable(test_parse example/parse.c)

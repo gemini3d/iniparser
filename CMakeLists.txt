@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15...3.24)
 project(iniparser
 LANGUAGES C
 HOMEPAGE_URL https://github.com/ndevilla/iniparser
-VERSION 4.1.0.1
+VERSION 4.1.0.2
 )
 
 include(CTest)

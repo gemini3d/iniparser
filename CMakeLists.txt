@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15...3.24)
+cmake_minimum_required(VERSION 3.13...3.25)
 
 project(iniparser
 LANGUAGES C
@@ -6,7 +6,7 @@ HOMEPAGE_URL https://github.com/ndevilla/iniparser
 VERSION 4.1.0.2
 )
 
-include(CTest)
+enable_testing()
 
 include(cmake/options.cmake)
 
@@ -23,8 +23,13 @@ $<$<BOOL:${MSVC}>:_CRT_SECURE_NO_WARNINGS>
 add_library(iniparser::iniparser INTERFACE IMPORTED GLOBAL)
 target_link_libraries(iniparser::iniparser INTERFACE iniparser)
 
-install(TARGETS iniparser EXPORT ${PROJECT_NAME}-targets)
-install(FILES src/iniparser.h src/dictionary.h TYPE INCLUDE)
+install(TARGETS iniparser EXPORT ${PROJECT_NAME}-targets
+LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+install(FILES src/iniparser.h src/dictionary.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 if(BUILD_TESTING)
   add_executable(test_iniparser example/iniexample.c)
